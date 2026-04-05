@@ -3,7 +3,7 @@ services:
     name: legacyloop-backend
     runtime: docker
     rootDir: backend
-    dockerfilePath: ./Dockerfile
+    dockerfilePath: Dockerfile
     plan: free
     autoDeploy: true
     healthCheckPath: /api/health
@@ -39,7 +39,7 @@ services:
     name: legacyloop-queue-worker
     runtime: docker
     rootDir: backend
-    dockerfilePath: ./Dockerfile.worker
+    dockerfilePath: Dockerfile.worker
     plan: free
     autoDeploy: true
     envVars:
