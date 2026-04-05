@@ -1,0 +1,170 @@
+services:
+  # MySQL Database
+  mysql:
+    image: mysql:8.0
+    container_name: legacyloop_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-root}
+      MYSQL_DATABASE: ${DB_DATABASE:-legacyloop}
+      MYSQL_USER: ${DB_USERNAME:-legacyloop}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-legacyloop123}
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - legacyloop_network
+    command: --max_connections=500 --default-authentication-plugin=mysql_native_password
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis Cache
+  redis:
+    image: redis:alpine
+    container_name: legacyloop_redis
+    ports:
+      - "6380:6379"
+    networks:
+      - legacyloop_network
+    command: redis-server --appendonly yes --maxmemory 512mb --maxmemory-policy allkeys-lru
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+  # Nginx Load Balancer
+  nginx:
+    image: nginx:alpine
+    container_name: legacyloop_nginx
+    ports:
+      - "80:80"
+      - "8080:8080"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - backend
+    networks:
+      - legacyloop_network
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8080/nginx-health"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+
+  # PHP Laravel Backend (scalable)
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    # container_name removed to allow scaling
+    expose:
+      - "8000"
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    env_file:
+      - ./backend/.env
+    environment:
+      APP_URL: ${APP_URL:-http://localhost}
+      APP_ENV: production
+      APP_DEBUG: "false"
+      DB_CONNECTION: mysql
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_DATABASE: ${DB_DATABASE:-legacyloop}
+      DB_USERNAME: ${DB_USERNAME:-legacyloop}
+      DB_PASSWORD: ${DB_PASSWORD:-legacyloop123}
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      CACHE_DRIVER: redis
+      SESSION_DRIVER: redis
+      QUEUE_CONNECTION: redis
+      SESSION_CONNECTION: redis
+    restart: unless-stopped
+    networks:
+      - legacyloop_network
+    healthcheck:
+      test: ["CMD", "php", "artisan", "inspire"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: '1'
+          memory: 512M
+        reservations:
+          cpus: '0.5'
+          memory: 256M
+
+  # Queue Workers
+  queue-worker:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.worker
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      backend:
+        condition: service_started
+    env_file:
+      - ./backend/.env
+    environment:
+      APP_ENV: production
+      APP_DEBUG: "false"
+      DB_CONNECTION: mysql
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_DATABASE: ${DB_DATABASE:-legacyloop}
+      DB_USERNAME: ${DB_USERNAME:-legacyloop}
+      DB_PASSWORD: ${DB_PASSWORD:-legacyloop123}
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      QUEUE_CONNECTION: redis
+    restart: unless-stopped
+    networks:
+      - legacyloop_network
+    deploy:
+      replicas: 2
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
+        reservations:
+          cpus: '0.25'
+          memory: 128M
+
+  # React Frontend - Commented out (no Dockerfile yet)
+  # frontend:
+  #   build:
+  #     context: ./frontend
+  #     dockerfile: Dockerfile
+  #   container_name: legacyloop_frontend
+  #   ports:
+  #     - "5173:5173"
+  #   volumes:
+  #     - ./frontend:/app
+  #     - /app/node_modules
+  #   environment:
+  #     VITE_API_URL: http://localhost:8000/api
+  #   networks:
+  #     - legacyloop_network
+
+volumes:
+  mysql_data:
+  redis_data:
+
+networks:
+  legacyloop_network:
+    driver: bridge

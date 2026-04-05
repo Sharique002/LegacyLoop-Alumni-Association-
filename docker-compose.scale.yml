@@ -1,0 +1,20 @@
+# Docker Compose override file for scaling
+# Use with: docker-compose -f docker-compose.yml -f docker-compose.scale.yml up -d
+
+version: '3.8'
+
+services:
+  backend:
+    deploy:
+      replicas: 3  # Run 3 backend instances
+      resources:
+        limits:
+          cpus: '1'
+          memory: 512M
+        reservations:
+          cpus: '0.5'
+          memory: 256M
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3

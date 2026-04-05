@@ -1,0 +1,357 @@
+<?php
+
+namespace Database\Seeders;
+
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
+use App\Models\User;
+
+class StudentSeeder extends Seeder
+{
+    /**
+     * Seed sample students across all departments.
+     * All passwords are: LegacyLoop@123
+     */
+    public function run(): void
+    {
+        $password = Hash::make('LegacyLoop@123');
+
+        $students = [
+
+            // ── Computer Science ──────────────────────────────
+            [
+                'first_name'      => 'Arjun',
+                'last_name'       => 'Sharma',
+                'email'           => 'arjun.sharma@legacyloop.in',
+                'branch'          => 'CS',
+                'degree'          => 'B.Tech',
+                'graduation_year' => '2022',
+                'enrollment_no'   => 'CS2018001',
+                'current_company' => 'Google',
+                'job_title'       => 'Software Engineer',
+                'industry'        => 'Technology',
+                'city'            => 'Bangalore',
+                'country'         => 'India',
+                'bio'             => 'Full-stack developer passionate about scalable systems.',
+            ],
+            [
+                'first_name'      => 'Priya',
+                'last_name'       => 'Mehta',
+                'email'           => 'priya.mehta@legacyloop.in',
+                'branch'          => 'CS',
+                'degree'          => 'B.Tech',
+                'graduation_year' => '2023',
+                'enrollment_no'   => 'CS2019002',
+                'current_company' => 'Microsoft',
+                'job_title'       => 'Frontend Developer',
+                'industry'        => 'Technology',
+                'city'            => 'Hyderabad',
+                'country'         => 'India',
+                'bio'             => 'UI/UX enthusiast building beautiful web experiences.',
+            ],
+            [
+                'first_name'      => 'Rohan',
+                'last_name'       => 'Verma',
+                'email'           => 'rohan.verma@legacyloop.in',
+                'branch'          => 'CS',
+                'degree'          => 'B.Tech',
+                'graduation_year' => '2024',
+                'enrollment_no'   => 'CS2020003',
+                'current_company' => 'Infosys',
+                'job_title'       => 'Junior Developer',
+                'industry'        => 'IT Services',
+                'city'            => 'Pune',
+                'country'         => 'India',
+                'bio'             => 'Fresher eager to learn and contribute.',
+            ],
+
+            // ── Information Technology ────────────────────────
+            [
+                'first_name'      => 'Sneha',
+                'last_name'       => 'Patel',
+                'email'           => 'sneha.patel@legacyloop.in',
+                'branch'          => 'IT',
+                'degree'          => 'B.Tech',
+                'graduation_year' => '2021',
+                'enrollment_no'   => 'IT2017001',
+                'current_company' => 'Amazon',
+                'job_title'       => 'Cloud Engineer',
+                'industry'        => 'E-Commerce',
+                'city'            => 'Mumbai',
+                'country'         => 'India',
+                'bio'             => 'AWS certified cloud practitioner.',
+            ],
+            [
+                'first_name'      => 'Kiran',
+                'last_name'       => 'Joshi',
+                'email'           => 'kiran.joshi@legacyloop.in',
+                'branch'          => 'IT',
+                'degree'          => 'B.Tech',
+                'graduation_year' => '2022',
+                'enrollment_no'   => 'IT2018002',
+                'current_company' => 'TCS',
+                'job_title'       => 'System Analyst',
+                'industry'        => 'IT Services',
+                'city'            => 'Chennai',
+                'country'         => 'India',
+                'bio'             => 'Experienced in enterprise system architecture.',
+            ],
+            [
+                'first_name'      => 'Ananya',
+                'last_name'       => 'Singh',
+                'email'           => 'ananya.singh@legacyloop.in',
+                'branch'          => 'IT',
+                'degree'          => 'B.Tech',
+                'graduation_year' => '2023',
+                'enrollment_no'   => 'IT2019003',
+                'current_company' => 'Wipro',
+                'job_title'       => 'DevOps Engineer',
+                'industry'        => 'Technology',
+                'city'            => 'Delhi',
+                'country'         => 'India',
+                'bio'             => 'Automating everything with CI/CD pipelines.',
+            ],
+
+            // ── Mechanical Engineering ────────────────────────
+            [
+                'first_name'      => 'Rahul',
+                'last_name'       => 'Kumar',
+                'email'           => 'rahul.kumar@legacyloop.in',
+                'branch'          => 'ME',
+                'degree'          => 'B.Tech',
+                'graduation_year' => '2021',
+                'enrollment_no'   => 'ME2017001',
+                'current_company' => 'Tata Motors',
+                'job_title'       => 'Design Engineer',
+                'industry'        => 'Automotive',
+                'city'            => 'Pune',
+                'country'         => 'India',
+                'bio'             => 'CAD/CAM specialist with 3+ years in automotive.',
+            ],
+            [
+                'first_name'      => 'Vikram',
+                'last_name'       => 'Nair',
+                'email'           => 'vikram.nair@legacyloop.in',
+                'branch'          => 'ME',
+                'degree'          => 'B.Tech',
+                'graduation_year' => '2022',
+                'enrollment_no'   => 'ME2018002',
+                'current_company' => 'Mahindra',
+                'job_title'       => 'Production Engineer',
+                'industry'        => 'Manufacturing',
+                'city'            => 'Nashik',
+                'country'         => 'India',
+                'bio'             => 'Lean manufacturing and Six Sigma certified.',
+            ],
+            [
+                'first_name'      => 'Deepa',
+                'last_name'       => 'Reddy',
+                'email'           => 'deepa.reddy@legacyloop.in',
+                'branch'          => 'ME',
+                'degree'          => 'B.Tech',
+                'graduation_year' => '2023',
+                'enrollment_no'   => 'ME2019003',
+                'current_company' => 'BHEL',
+                'job_title'       => 'Junior Engineer',
+                'industry'        => 'Heavy Engineering',
+                'city'            => 'Hyderabad',
+                'country'         => 'India',
+                'bio'             => 'Passionate about renewable energy systems.',
+            ],
+
+            // ── Civil Engineering ─────────────────────────────
+            [
+                'first_name'      => 'Suresh',
+                'last_name'       => 'Gupta',
+                'email'           => 'suresh.gupta@legacyloop.in',
+                'branch'          => 'CIVIL',
+                'degree'          => 'B.Tech',
+                'graduation_year' => '2020',
+                'enrollment_no'   => 'CV2016001',
+                'current_company' => 'L&T Construction',
+                'job_title'       => 'Site Engineer',
+                'industry'        => 'Construction',
+                'city'            => 'Ahmedabad',
+                'country'         => 'India',
+                'bio'             => 'Building infrastructure for a better India.',
+            ],
+            [
+                'first_name'      => 'Meera',
+                'last_name'       => 'Iyer',
+                'email'           => 'meera.iyer@legacyloop.in',
+                'branch'          => 'CIVIL',
+                'degree'          => 'B.Tech',
+                'graduation_year' => '2021',
+                'enrollment_no'   => 'CV2017002',
+                'current_company' => 'Gammon India',
+                'job_title'       => 'Structural Engineer',
+                'industry'        => 'Construction',
+                'city'            => 'Mumbai',
+                'country'         => 'India',
+                'bio'             => 'Specialising in bridge and high-rise structural design.',
+            ],
+            [
+                'first_name'      => 'Ajay',
+                'last_name'       => 'Pillai',
+                'email'           => 'ajay.pillai@legacyloop.in',
+                'branch'          => 'CIVIL',
+                'degree'          => 'B.Tech',
+                'graduation_year' => '2022',
+                'enrollment_no'   => 'CV2018003',
+                'current_company' => 'NHAI',
+                'job_title'       => 'Project Engineer',
+                'industry'        => 'Infrastructure',
+                'city'            => 'Kochi',
+                'country'         => 'India',
+                'bio'             => 'Working on national highway expansion projects.',
+            ],
+
+            // ── Electrical Engineering ────────────────────────
+            [
+                'first_name'      => 'Neha',
+                'last_name'       => 'Mishra',
+                'email'           => 'neha.mishra@legacyloop.in',
+                'branch'          => 'EE',
+                'degree'          => 'B.Tech',
+                'graduation_year' => '2021',
+                'enrollment_no'   => 'EE2017001',
+                'current_company' => 'Siemens',
+                'job_title'       => 'Electrical Engineer',
+                'industry'        => 'Energy',
+                'city'            => 'Jaipur',
+                'country'         => 'India',
+                'bio'             => 'Power systems and smart grid enthusiast.',
+            ],
+            [
+                'first_name'      => 'Aditya',
+                'last_name'       => 'Bansal',
+                'email'           => 'aditya.bansal@legacyloop.in',
+                'branch'          => 'EE',
+                'degree'          => 'B.Tech',
+                'graduation_year' => '2022',
+                'enrollment_no'   => 'EE2018002',
+                'current_company' => 'ABB',
+                'job_title'       => 'Automation Engineer',
+                'industry'        => 'Industrial Automation',
+                'city'            => 'Vadodara',
+                'country'         => 'India',
+                'bio'             => 'Industrial robotics and PLC programming.',
+            ],
+            [
+                'first_name'      => 'Pooja',
+                'last_name'       => 'Desai',
+                'email'           => 'pooja.desai@legacyloop.in',
+                'branch'          => 'EE',
+                'degree'          => 'B.Tech',
+                'graduation_year' => '2023',
+                'enrollment_no'   => 'EE2019003',
+                'current_company' => 'NTPC',
+                'job_title'       => 'Graduate Trainee',
+                'industry'        => 'Power Generation',
+                'city'            => 'Noida',
+                'country'         => 'India',
+                'bio'             => 'Aspiring power plant operations expert.',
+            ],
+
+            // ── Electronics Engineering ───────────────────────
+            [
+                'first_name'      => 'Siddharth',
+                'last_name'       => 'Rao',
+                'email'           => 'siddharth.rao@legacyloop.in',
+                'branch'          => 'EC',
+                'degree'          => 'B.Tech',
+                'graduation_year' => '2021',
+                'enrollment_no'   => 'EC2017001',
+                'current_company' => 'Qualcomm',
+                'job_title'       => 'VLSI Engineer',
+                'industry'        => 'Semiconductor',
+                'city'            => 'Bangalore',
+                'country'         => 'India',
+                'bio'             => 'VLSI design and chip architecture enthusiast.',
+            ],
+            [
+                'first_name'      => 'Kavya',
+                'last_name'       => 'Krishnan',
+                'email'           => 'kavya.krishnan@legacyloop.in',
+                'branch'          => 'EC',
+                'degree'          => 'B.Tech',
+                'graduation_year' => '2022',
+                'enrollment_no'   => 'EC2018002',
+                'current_company' => 'Samsung',
+                'job_title'       => 'Embedded Systems Engineer',
+                'industry'        => 'Consumer Electronics',
+                'city'            => 'Noida',
+                'country'         => 'India',
+                'bio'             => 'Firmware and IoT device development.',
+            ],
+            [
+                'first_name'      => 'Manish',
+                'last_name'       => 'Tiwari',
+                'email'           => 'manish.tiwari@legacyloop.in',
+                'branch'          => 'EC',
+                'degree'          => 'B.Tech',
+                'graduation_year' => '2023',
+                'enrollment_no'   => 'EC2019003',
+                'current_company' => 'ISRO',
+                'job_title'       => 'Scientist/Engineer',
+                'industry'        => 'Space Research',
+                'city'            => 'Thiruvananthapuram',
+                'country'         => 'India',
+                'bio'             => 'Satellite communication systems development.',
+            ],
+
+            // ── Chemical Engineering ──────────────────────────
+            [
+                'first_name'      => 'Ritu',
+                'last_name'       => 'Agarwal',
+                'email'           => 'ritu.agarwal@legacyloop.in',
+                'branch'          => 'CH',
+                'degree'          => 'B.Tech',
+                'graduation_year' => '2021',
+                'enrollment_no'   => 'CH2017001',
+                'current_company' => 'Reliance Industries',
+                'job_title'       => 'Process Engineer',
+                'industry'        => 'Petrochemical',
+                'city'            => 'Jamnagar',
+                'country'         => 'India',
+                'bio'             => 'Optimising refinery processes for efficiency.',
+            ],
+            [
+                'first_name'      => 'Gaurav',
+                'last_name'       => 'Shah',
+                'email'           => 'gaurav.shah@legacyloop.in',
+                'branch'          => 'CH',
+                'degree'          => 'B.Tech',
+                'graduation_year' => '2022',
+                'enrollment_no'   => 'CH2018002',
+                'current_company' => 'ONGC',
+                'job_title'       => 'Chemical Engineer',
+                'industry'        => 'Oil & Gas',
+                'city'            => 'Surat',
+                'country'         => 'India',
+                'bio'             => 'Gas processing and pipeline operations.',
+            ],
+        ];
+
+        foreach ($students as $data) {
+            // Skip if already exists
+            if (User::where('email', $data['email'])->exists()) {
+                continue;
+            }
+
+            User::create(array_merge($data, [
+                'password'        => $password,
+                'is_active'       => true,
+                'is_admin'        => false,
+                'experience_years' => rand(1, 5),
+                'is_profile_public'       => true,
+                'is_open_to_mentor'       => (bool) rand(0, 1),
+                'is_seeking_opportunities' => (bool) rand(0, 1),
+            ]));
+        }
+
+        $this->command->info('✅ ' . count($students) . ' sample students seeded across 7 departments.');
+        $this->command->info('📧 Email format: firstname.lastname@legacyloop.in');
+        $this->command->info('🔑 Password for all: LegacyLoop@123');
+    }
+}
