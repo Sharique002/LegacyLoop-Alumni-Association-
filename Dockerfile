@@ -20,12 +20,11 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 # Set working directory
 WORKDIR /var/www/html
 
-# Install PHP dependencies in image build for reproducible deploys
-COPY backend/composer.json backend/composer.lock ./
-RUN composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
-
-# Copy application files from backend directory
+# Copy all application files from backend directory first
 COPY backend/ .
+
+# Install PHP dependencies (files are now present)
+RUN composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
 
 # Ensure writable directories are present
 RUN mkdir -p storage/logs bootstrap/cache && \

@@ -21,12 +21,11 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 # Set working directory
 WORKDIR /var/www/html
 
-# Install dependencies first for better layer caching
-COPY backend/composer.json backend/composer.lock ./
-RUN composer install --no-interaction --no-dev --prefer-dist --optimize-autoloader
-
-# Copy application files from backend directory
+# Copy all application files from backend directory first
 COPY backend/ .
+
+# Install dependencies (files are now present)
+RUN composer install --no-interaction --no-dev --prefer-dist --optimize-autoloader
 
 # Copy supervisor configuration
 COPY backend/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
